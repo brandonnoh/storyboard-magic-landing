@@ -66,6 +66,38 @@
       background-size: 28px 28px;
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+    /* Lightbox */
+    img.zoomable { cursor: zoom-in; }
+    #lightbox {
+      position: fixed; inset: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: center;
+      padding: 5vmin;
+      background: rgba(20, 22, 26, .88);
+      -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+      opacity: 0; visibility: hidden;
+      transition: opacity .22s ease, visibility .22s ease;
+      overscroll-behavior: contain; touch-action: none;
+    }
+    #lightbox.open { opacity: 1; visibility: visible; }
+    #lightbox img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      border-radius: 12px; box-shadow: 0 24px 70px rgba(0,0,0,.55);
+      cursor: default; transform: scale(.97); transition: transform .22s ease;
+    }
+    #lightbox.open img { transform: scale(1); }
+    #lightbox-close {
+      position: absolute; top: 18px; right: 18px;
+      display: grid; place-items: center; height: 44px; width: 44px;
+      border-radius: 9999px; color: #fff;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18);
+      cursor: pointer; transition: background .15s ease;
+    }
+    #lightbox-close:hover { background: rgba(255,255,255,.22); }
+    @media (prefers-reduced-motion: reduce) {
+      #lightbox, #lightbox img { transition: none; }
+      #lightbox img { transform: none; }
+    }
   </style>
 </head>
 
@@ -333,5 +365,70 @@
       <p class="text-xs text-ink-faint">© 2026 Storyboard Magic · 화면기획을 위한 데스크톱 도구</p>
     </div>
   </footer>
+
+  <!-- ============ LIGHTBOX ============ -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="이미지 확대 보기">
+    <button id="lightbox-close" type="button" aria-label="닫기">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+
+  <script>
+    (function () {
+      const lb = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lightbox-img');
+      const closeBtn = document.getElementById('lightbox-close');
+      const triggers = document.querySelectorAll('img[src^="assets/shot"]');
+      let lastFocus = null;
+
+      function lockScroll() {
+        const sbw = window.innerWidth - document.documentElement.clientWidth;
+        document.body.style.overflow = 'hidden';
+        if (sbw > 0) document.body.style.paddingRight = sbw + 'px';
+      }
+      function unlockScroll() {
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+      }
+      function open(src, alt) {
+        lastFocus = document.activeElement;
+        lbImg.src = src;
+        lbImg.alt = alt || '';
+        lb.classList.add('open');
+        lockScroll();
+        closeBtn.focus();
+      }
+      function close() {
+        if (!lb.classList.contains('open')) return;
+        lb.classList.remove('open');
+        unlockScroll();
+        lbImg.src = '';
+        if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+      }
+
+      triggers.forEach(function (img) {
+        img.classList.add('zoomable');
+        img.setAttribute('role', 'button');
+        img.setAttribute('tabindex', '0');
+        img.setAttribute('aria-haspopup', 'dialog');
+        img.addEventListener('click', function () { open(img.currentSrc || img.src, img.alt); });
+        img.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(img.currentSrc || img.src, img.alt); }
+        });
+      });
+
+      closeBtn.addEventListener('click', close);
+      // 배경(이미지 바깥) 클릭만 닫기
+      lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+      // ESC 닫기
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      // 포커스 트랩: 열린 동안 Tab은 닫기 버튼에 고정
+      lb.addEventListener('keydown', function (e) { if (e.key === 'Tab') { e.preventDefault(); closeBtn.focus(); } });
+      // 뒷배경 휠/터치 스크롤 차단 (오버레이 위에서)
+      lb.addEventListener('wheel', function (e) { e.preventDefault(); }, { passive: false });
+      lb.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
+    })();
+  </script>
 </body>
 </html>
