@@ -1,2 +1,4 @@
 .DS_Store
 nohup.out
+# OG 이미지 생성용 소스(로컬 보관) — 배포 불필요, assets/og-image.png만 배포
+og-image.html
