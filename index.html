@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Storyboard Magic — 기획자를 위한 AI 화면설계 도구</title>
+  <meta name="description" content="아이디어를 입력하면 정보구조(IA)부터 와이어프레임·유저플로우까지 자동 설계하는 데스크톱 화면기획 도구. 데이터는 내 컴퓨터에만 저장됩니다." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Storyboard Magic — 기획자를 위한 AI 화면설계 도구" />
+  <meta property="og:description" content="아이디어를 입력하면 IA부터 와이어프레임·유저플로우까지 자동 설계. 데이터는 내 컴퓨터에만." />
+  <meta name="theme-color" content="#14161a" />
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:    { DEFAULT: '#16181d', soft: '#3a3d46', faint: '#71747e' },
+            paper:  { DEFAULT: '#faf9f6', card: '#ffffff', line: '#e7e5de' },
+            graphite: { DEFAULT: '#14161a', 800: '#1c1f25', 700: '#262a31' },
+            accent: { DEFAULT: '#ef5d33', soft: '#ff7a52', tint: '#fdeee8' }
+          },
+          fontFamily: {
+            sans: ['"Pretendard Variable"', 'Pretendard', 'system-ui', 'sans-serif'],
+            mono: ['"SFMono-Regular"', 'ui-monospace', 'Menlo', 'monospace']
+          },
+          maxWidth: { content: '1120px' }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    .blueprint {
+      background-color: #14161a;
+      background-image:
+        linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+
+<body class="bg-paper text-ink font-sans antialiased">
+
+  <!-- ============ NAV ============ -->
+  <header class="sticky top-0 z-50 border-b border-paper-line/80 bg-paper/85 backdrop-blur">
+    <nav class="mx-auto flex max-w-content items-center justify-between px-6 py-4">
+      <a href="#top" class="flex items-center gap-2.5">
+        <span class="grid h-8 w-8 place-items-center rounded-lg bg-graphite text-paper">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </span>
+        <span class="text-[15px] font-semibold tracking-tight">Storyboard Magic</span>
+      </a>
+      <div class="flex items-center gap-1.5 sm:gap-3">
+        <a href="#features" class="hidden rounded-md px-3 py-2 text-sm text-ink-soft hover:text-ink sm:block">기능</a>
+        <a href="#how" class="hidden rounded-md px-3 py-2 text-sm text-ink-soft hover:text-ink sm:block">동작 방식</a>
+        <a href="#download" class="rounded-lg bg-graphite px-4 py-2 text-sm font-semibold text-paper transition hover:bg-graphite-700">다운로드</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="relative overflow-hidden">
+      <div class="mx-auto grid max-w-content items-center gap-14 px-6 pb-20 pt-16 lg:grid-cols-[1.05fr,1fr] lg:pt-24">
+        <div>
+          <span class="inline-flex items-center gap-2 rounded-full border border-paper-line bg-paper-card px-3 py-1 text-xs font-medium text-ink-soft">
+            <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
+            데스크톱 앱 · macOS · Windows
+          </span>
+          <h1 class="mt-6 text-4xl font-bold leading-[1.12] tracking-tight sm:text-5xl lg:text-[56px]">
+            화면기획,<br/>
+            <span class="text-accent">아이디어 한 줄</span>에서<br/>시작하세요.
+          </h1>
+          <p class="mt-6 max-w-md text-lg leading-relaxed text-ink-soft">
+            만들려는 서비스를 설명하면 정보구조(IA)부터 와이어프레임,
+            유저 플로우까지 자동으로 설계합니다.
+            PDF·PPTX로 내보내 그대로 공유하세요.
+          </p>
+
+          <div id="download-hero" class="mt-9 flex flex-col gap-3 sm:flex-row">
+            <a href="https://github.com/brandonnoh/storyboard-magic-landing/releases/latest/download/storyboard-magic-mac-arm64.dmg"
+               class="group inline-flex items-center justify-center gap-2.5 rounded-xl bg-graphite px-6 py-3.5 font-semibold text-paper shadow-sm transition hover:bg-graphite-700">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.9c0-2.3 1.9-3.4 2-3.4-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 3 2.3 1.2-.1 1.6-.8 3.1-.8s1.8.8 3 .7c1.3 0 2.1-1.1 2.9-2.3.9-1.3 1.3-2.6 1.3-2.7-.1 0-2.5-1-2.5-3.9zM14.1 5.6c.7-.8 1.1-2 1-3.1-1 .04-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1 .1 2.1-.5 2.8-1.3z"/></svg>
+              <span class="text-left leading-tight">
+                Mac 다운로드
+                <span class="block text-[11px] font-normal text-paper/60">Apple Silicon · 206MB</span>
+              </span>
+            </a>
+            <a href="https://github.com/brandonnoh/storyboard-magic-landing/releases/latest/download/storyboard-magic-windows.exe"
+               class="group inline-flex items-center justify-center gap-2.5 rounded-xl border border-paper-line bg-paper-card px-6 py-3.5 font-semibold text-ink shadow-sm transition hover:border-ink-faint">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10.5 4.4v7.1H3zM10.5 12.5v7.1L3 18.5v-6zM11.5 4.3 21 3v8.5h-9.5zM21 12.5V21l-9.5-1.3v-7.2z"/></svg>
+              <span class="text-left leading-tight">
+                Windows 다운로드
+                <span class="block text-[11px] font-normal text-ink-faint">64-bit · 167MB</span>
+              </span>
+            </a>
+          </div>
+          <p class="mt-4 text-xs text-ink-faint">현재 버전 v0.1.29 · 설치 후 바로 사용 · 로그인 불필요</p>
+        </div>
+
+        <!-- Hero visual: real app screenshot in a window frame -->
+        <div class="relative">
+          <figure class="overflow-hidden rounded-2xl border border-graphite-700 shadow-2xl">
+            <div class="flex items-center gap-1.5 bg-graphite-800 px-4 py-3">
+              <span class="h-3 w-3 rounded-full bg-[#ff5f57]"></span>
+              <span class="h-3 w-3 rounded-full bg-[#febc2e]"></span>
+              <span class="h-3 w-3 rounded-full bg-[#28c840]"></span>
+              <span class="ml-3 font-mono text-[11px] text-paper/40">Storyboard Magic</span>
+            </div>
+            <img src="assets/shot-viewer.png" alt="Storyboard Magic 화면 — IA 트리, 유저 플로우, 화면 설명 3패널" class="block w-full" loading="eager" />
+          </figure>
+          <div class="pointer-events-none absolute -right-6 -top-6 -z-10 h-40 w-40 rounded-full bg-accent/15 blur-2xl"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PAIN / VALUE ============ -->
+    <section class="border-y border-paper-line bg-paper-card">
+      <div class="mx-auto max-w-content px-6 py-16">
+        <p class="max-w-3xl text-2xl font-semibold leading-snug tracking-tight sm:text-[28px]">
+          기획서 한 장 쓰자고 IA 짜고, 화면 그리고, 플로우 정리하고,
+          PPT로 옮기는 데 <span class="text-accent">며칠</span>을 씁니다.
+          <span class="text-ink-soft">그 반복을 도구가 대신합니다.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ FEATURES (bento) ============ -->
+    <section id="features" class="mx-auto max-w-content px-6 py-20 lg:py-28">
+      <div class="mb-12 max-w-xl">
+        <p class="font-mono text-xs uppercase tracking-wider text-accent">기능</p>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">설계의 처음부터 끝까지</h2>
+        <p class="mt-3 text-ink-soft">한 도구 안에서 정보구조 설계, 화면 작성, 흐름 검토, 산출물 내보내기까지 이어집니다.</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-3 md:grid-rows-2">
+        <!-- big card: IA -->
+        <article class="group flex flex-col justify-between rounded-2xl border border-paper-line bg-paper-card p-7 md:col-span-2 md:row-span-2">
+          <div>
+            <div class="mb-5 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-graphite text-paper">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18M3 12h18M3 19h12"/></svg>
+            </div>
+            <h3 class="text-xl font-semibold">IA 자동 생성</h3>
+            <p class="mt-2 max-w-md text-ink-soft">서비스를 설명하면 사용자 유형별 화면을 계층형 코드(<span class="font-mono text-sm text-ink">BUYER-1.2.3</span>)로 구조화합니다. 페이지·모달·상세·탭·상태·컴포넌트 6가지 화면 타입으로 자동 분류해요.</p>
+          </div>
+          <figure class="mt-6 overflow-hidden rounded-xl border border-paper-line bg-paper">
+            <img src="assets/shot-ia.png" alt="IA 전체보기 — 화면 코드·타입·상태 컬럼" class="block w-full" loading="eager" />
+          </figure>
+        </article>
+
+        <!-- wireframe -->
+        <article class="rounded-2xl border border-paper-line bg-paper-card p-7">
+          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-accent-tint text-accent">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold">와이어프레임 미리보기</h3>
+          <p class="mt-2 text-sm text-ink-soft">각 화면의 와이어프레임을 갤러리·플로우에서 호버만으로 즉시 확인합니다.</p>
+        </article>
+
+        <!-- user flow -->
+        <article class="rounded-2xl border border-paper-line bg-paper-card p-7">
+          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-accent-tint text-accent">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 6h7a3 3 0 0 1 3 3v7"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold">유저 플로우</h3>
+          <p class="mt-2 text-sm text-ink-soft">화면 간 이동을 그래프로 그리고, 클릭 경로를 하이라이트해 흐름을 검토합니다.</p>
+        </article>
+      </div>
+
+      <div class="mt-4 grid gap-4 md:grid-cols-3">
+        <!-- annotation -->
+        <article class="rounded-2xl border border-paper-line bg-paper-card p-7">
+          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-accent-tint text-accent">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold">어노테이션</h3>
+          <p class="mt-2 text-sm text-ink-soft">와이어프레임 위에 번호 마커와 설명을 달아 의도를 명확히 전달합니다.</p>
+        </article>
+        <!-- export -->
+        <article class="rounded-2xl border border-paper-line bg-paper-card p-7">
+          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-accent-tint text-accent">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold">PDF · PPTX · 엑셀 내보내기</h3>
+          <p class="mt-2 text-sm text-ink-soft">완성한 기획을 문서로 내보내 회의·공유에 그대로 사용합니다.</p>
+        </article>
+        <!-- local -->
+        <article class="rounded-2xl border border-paper-line bg-paper-card p-7">
+          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-accent-tint text-accent">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold">로컬 저장 · 프라이버시</h3>
+          <p class="mt-2 text-sm text-ink-soft">모든 데이터는 내 컴퓨터의 파일로 저장됩니다. 서버 업로드도, 로그인도 없습니다.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ SHOWCASE (real screens) ============ -->
+    <section class="border-t border-paper-line bg-paper-card">
+      <div class="mx-auto max-w-content px-6 py-20 lg:py-28">
+        <div class="mb-12 max-w-xl">
+          <p class="font-mono text-xs uppercase tracking-wider text-accent">실제 화면</p>
+          <h2 class="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">목업이 아니라 진짜 결과물</h2>
+          <p class="mt-3 text-ink-soft">아래는 실제 프로젝트로 작성한 화면입니다. 와이어프레임 위 어노테이션, 화면 간 유저 플로우까지 그대로 확인하세요.</p>
+        </div>
+
+        <div class="grid gap-8 lg:grid-cols-2">
+          <figure>
+            <div class="overflow-hidden rounded-2xl border border-paper-line shadow-lg">
+              <img src="assets/shot-wireframe.png" alt="와이어프레임 화면과 우측 어노테이션 설명" class="block w-full" loading="eager" />
+            </div>
+            <figcaption class="mt-4">
+              <h3 class="font-semibold">와이어프레임 + 어노테이션</h3>
+              <p class="mt-1 text-sm text-ink-soft">화면을 그리고, 번호 마커로 의도를 설명합니다.</p>
+            </figcaption>
+          </figure>
+          <figure>
+            <div class="overflow-hidden rounded-2xl border border-paper-line shadow-lg">
+              <img src="assets/shot-flow.png" alt="유저 플로우 다이어그램과 서브플로우 미리보기" class="block w-full" loading="eager" />
+            </div>
+            <figcaption class="mt-4">
+              <h3 class="font-semibold">유저 플로우 · 드릴다운</h3>
+              <p class="mt-1 text-sm text-ink-soft">화면 흐름을 다이어그램으로 보고, 카드를 누르면 하위 플로우까지 펼쳐집니다.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <section id="how" class="border-y border-paper-line bg-graphite text-paper">
+      <div class="mx-auto max-w-content px-6 py-20 lg:py-28">
+        <div class="mb-14 max-w-xl">
+          <p class="font-mono text-xs uppercase tracking-wider text-accent-soft">동작 방식</p>
+          <h2 class="mt-3 text-3xl font-bold tracking-tight text-paper sm:text-4xl">네 단계면 충분합니다</h2>
+        </div>
+        <ol class="grid gap-px overflow-hidden rounded-2xl border border-graphite-700 bg-graphite-700 md:grid-cols-4">
+          <li class="bg-graphite-800 p-7">
+            <span class="font-mono text-sm text-accent-soft">01</span>
+            <h3 class="mt-3 text-lg font-semibold">아이디어 입력</h3>
+            <p class="mt-2 text-sm text-paper/55">만들 서비스와 원하는 UX를 온보딩에서 설명합니다.</p>
+          </li>
+          <li class="bg-graphite-800 p-7">
+            <span class="font-mono text-sm text-accent-soft">02</span>
+            <h3 class="mt-3 text-lg font-semibold">IA 자동 설계</h3>
+            <p class="mt-2 text-sm text-paper/55">사용자 유형별 화면 구조를 계층형 코드로 받아 검토·수정합니다.</p>
+          </li>
+          <li class="bg-graphite-800 p-7">
+            <span class="font-mono text-sm text-accent-soft">03</span>
+            <h3 class="mt-3 text-lg font-semibold">와이어프레임 · 플로우</h3>
+            <p class="mt-2 text-sm text-paper/55">화면별 와이어프레임을 생성하고 유저 플로우로 흐름을 점검합니다.</p>
+          </li>
+          <li class="bg-graphite-800 p-7">
+            <span class="font-mono text-sm text-accent-soft">04</span>
+            <h3 class="mt-3 text-lg font-semibold">내보내기</h3>
+            <p class="mt-2 text-sm text-paper/55">PDF·PPTX·엑셀로 내보내 팀과 공유합니다.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ FINAL CTA ============ -->
+    <section id="download" class="mx-auto max-w-content px-6 py-20 lg:py-28">
+      <div class="relative overflow-hidden rounded-3xl border border-paper-line bg-paper-card px-6 py-16 text-center shadow-sm sm:px-12">
+        <div class="pointer-events-none absolute left-1/2 top-0 -z-10 h-64 w-[42rem] -translate-x-1/2 rounded-full bg-accent/10 blur-3xl"></div>
+        <h2 class="mx-auto max-w-2xl text-3xl font-bold tracking-tight sm:text-[40px] sm:leading-tight">
+          지금 받아서 첫 기획을 시작하세요
+        </h2>
+        <p class="mx-auto mt-4 max-w-md text-ink-soft">설치하면 바로 쓸 수 있습니다. 계정도, 구독도 필요 없어요.</p>
+
+        <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <a href="https://github.com/brandonnoh/storyboard-magic-landing/releases/latest/download/storyboard-magic-mac-arm64.dmg"
+             class="inline-flex items-center justify-center gap-2.5 rounded-xl bg-graphite px-7 py-3.5 font-semibold text-paper transition hover:bg-graphite-700">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.9c0-2.3 1.9-3.4 2-3.4-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 3 2.3 1.2-.1 1.6-.8 3.1-.8s1.8.8 3 .7c1.3 0 2.1-1.1 2.9-2.3.9-1.3 1.3-2.6 1.3-2.7-.1 0-2.5-1-2.5-3.9zM14.1 5.6c.7-.8 1.1-2 1-3.1-1 .04-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1 .1 2.1-.5 2.8-1.3z"/></svg>
+            Mac 다운로드
+          </a>
+          <a href="https://github.com/brandonnoh/storyboard-magic-landing/releases/latest/download/storyboard-magic-windows.exe"
+             class="inline-flex items-center justify-center gap-2.5 rounded-xl border border-paper-line px-7 py-3.5 font-semibold text-ink transition hover:border-ink-faint">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10.5 4.4v7.1H3zM10.5 12.5v7.1L3 18.5v-6zM11.5 4.3 21 3v8.5h-9.5zM21 12.5V21l-9.5-1.3v-7.2z"/></svg>
+            Windows 다운로드
+          </a>
+        </div>
+
+        <p class="mx-auto mt-7 max-w-lg text-xs leading-relaxed text-ink-faint">
+          Mac은 Apple Silicon(M1 이상) 전용입니다. 처음 실행 시 보안 경고가 뜨면
+          앱을 <strong class="text-ink-soft">우클릭 → 열기</strong>로 한 번만 허용하세요.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="border-t border-paper-line">
+    <div class="mx-auto flex max-w-content flex-col items-center justify-between gap-4 px-6 py-10 sm:flex-row">
+      <div class="flex items-center gap-2.5">
+        <span class="grid h-7 w-7 place-items-center rounded-md bg-graphite text-paper">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </span>
+        <span class="text-sm font-semibold">Storyboard Magic</span>
+        <span class="font-mono text-xs text-ink-faint">v0.1.29</span>
+      </div>
+      <p class="text-xs text-ink-faint">© 2026 Storyboard Magic · 화면기획을 위한 데스크톱 도구</p>
+    </div>
+  </footer>
+</body>
+</html>
